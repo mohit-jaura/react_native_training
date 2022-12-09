@@ -1,14 +1,45 @@
 h1 {
-  color: orange;
+  color: black;
 }
-* {
-  color: blue;
-}
-
 .error {
   color: red;
 }
 
 .success {
   color: green;
+}
+
+.orange {
+  background-color: orange;
+  text-align: center;
+  line-height: 2;
+  word-spacing: 20px;
+  letter-spacing: 4px;
+}
+
+.yellow {
+  background-color: yellow;
+}
+
+.font-family {
+  font-family: Verdana, Geneva, Tahoma, sans-serif;
+  font-style: italic;
+  font-weight: bold;
+  text-decoration: underline;
+  font-size: 50px;
+}
+
+ul {
+  list-style-type: circle;
+  margin: 10px;
+  padding: 0px;
+}
+
+.box-model {
+  border: 1px solid red;
+  height: 50px;
+  width: 300px;
+  padding: 20px;
+  margin: 20px;
+  border-radius: 20px;
 }
