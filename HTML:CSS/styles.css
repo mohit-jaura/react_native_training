@@ -1,0 +1,14 @@
+h1 {
+  color: orange;
+}
+* {
+  color: blue;
+}
+
+.error {
+  color: red;
+}
+
+.success {
+  color: green;
+}
