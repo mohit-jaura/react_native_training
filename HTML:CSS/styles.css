@@ -43,3 +43,42 @@ ul {
   margin: 20px;
   border-radius: 20px;
 }
+
+th,
+td {
+  border: 1px solid #ccc;
+  padding: 15px;
+}
+
+table {
+  border-collapse: collapse;
+  width: 60%;
+}
+
+td {
+  text-align: center;
+}
+
+.position-1 {
+  border: 1px solid red;
+  position: relative;
+  top: 50px;
+  left: 50px;
+}
+
+.position-2 {
+  border: 1px solid blue;
+  position: absolute;
+  bottom: 0px;
+  right: 0px;
+}
+
+.em-container {
+  font-size: 20px;
+  height: 6em;
+  border: 1px solid green;
+}
+
+.em {
+  font-size: 1.5em;
+}
