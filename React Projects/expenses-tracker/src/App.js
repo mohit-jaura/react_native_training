@@ -1,5 +1,6 @@
-import React from "react";
+import React, { useState } from "react";
 import Expenses from "./components/Expenses/Expenses";
+import NewExpense from "./components/New Expenses/NewExpense";
 
 function App() {
   const expenses = [
@@ -24,10 +25,16 @@ function App() {
     },
   ];
 
+  const [expensesList, setExpensesList] = useState(expenses);
+  const saveNewExpense = (newExpense) => {
+    setExpensesList((prevExpenses) => {
+      return [newExpense, ...expensesList];
+    });
+  };
   return (
     <div className="App">
-      <h2> Let's get started </h2>
-      <Expenses expenses={expenses}></Expenses>
+      <NewExpense onSaveNewExpense={saveNewExpense}></NewExpense>
+      <Expenses expenses={expensesList}></Expenses>
     </div>
   );
 }
