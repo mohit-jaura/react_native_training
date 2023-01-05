@@ -1,15 +1,61 @@
-import React from 'react';
-import {StyleSheet, Text, View, Button, TextInput} from 'react-native';
+import React, {useState} from 'react';
+import {StyleSheet, View, FlatList, Button} from 'react-native';
+import GoalInput from './components/GoalInput';
+import GoalItem from './components/GoalItem';
 
 const App = () => {
+  const [goals, setGoals] = useState([]);
+  const [showModal, setShowModal] = useState(false);
+
+  const addGoalHandler = newGoal => {
+    setGoals(previousGoals => [
+      {text: newGoal, id: Math.random().toString()},
+      ...previousGoals,
+    ]);
+
+    console.log(goals);
+  };
+
+  const deleteGoalHandler = id => {
+    setGoals(previousGoals => {
+      return previousGoals.filter(goal => goal.id !== id);
+    });
+  };
+
+  const hideModalHandler = hide => {
+    setShowModal(hide);
+  };
   return (
     <View style={styles.appContainer}>
-      <View style={styles.inputContainer}>
-        <TextInput placeholder="Enter Your Goal!" style={styles.textInput} />
-        <Button title="Add Goal" />
-      </View>
       <View>
-        <Text>List of goals...</Text>
+        <Button
+          title="Add New Goal"
+          onPress={() => {
+            setShowModal(true);
+          }}
+          color="#009EFF"
+        />
+      </View>
+      <GoalInput
+        showModal={showModal}
+        addGoalHandler={addGoalHandler}
+        hideModalHandler={hideModalHandler}
+      />
+      <View style={styles.goalsContainer}>
+        <FlatList
+          data={goals}
+          renderItem={goalsData => {
+            return (
+              <GoalItem
+                goalsData={goalsData}
+                deleteGoalHandler={deleteGoalHandler}
+              />
+            );
+          }}
+          keyExtractor={(item, index) => {
+            return item.id;
+          }}
+        />
       </View>
     </View>
   );
@@ -17,20 +63,17 @@ const App = () => {
 
 const styles = StyleSheet.create({
   appContainer: {
-    padding: 50,
+    flex: 1,
+    paddingTop: 50,
+    paddingHorizontal: 16,
   },
 
-  inputContainer: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-  },
-
-  textInput: {
-    borderWidth: 1,
-    borderColor: '#cccccc',
-    paddingLeft: 5,
-    marginRight: 8,
-    width: '80%',
+  goalsContainer: {
+    flex: 3,
+    marginTop: 24,
+    paddingTop: 15,
+    borderTopWidth: 1,
+    borderTopColor: '#cccccc',
   },
 });
 
