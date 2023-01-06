@@ -11,7 +11,6 @@ const GoalInput = props => {
   const addGoalHandler = () => {
     props.addGoalHandler(goalInput);
     setGoalInput('');
-    props.hideModalHandler(false);
   };
 
   return (
@@ -31,7 +30,7 @@ const GoalInput = props => {
           onChangeText={goalInputHandler}
         />
         <View style={styles.buttonView}>
-          <Button title="Add Goal" onPress={addGoalHandler} color="#009EFF" />
+          <Button title="Add Goal" onPress={addGoalHandler} color="#5837D0" />
         </View>
 
         <View style={styles.buttonView}>
@@ -40,7 +39,7 @@ const GoalInput = props => {
             onPress={() => {
               props.hideModalHandler(false);
             }}
-            color="#009EFF"
+            color="#5837D0"
           />
         </View>
       </View>
@@ -58,15 +57,15 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
-    backgroundColor: '#00FFF6',
+    backgroundColor: '#5DA7DB',
   },
 
   textInput: {
-    borderWidth: 1,
-    borderColor: '#cccccc',
-    width: '70%',
-    marginRight: 8,
-    padding: 8,
+    backgroundColor: 'white',
+    width: '90%',
+    borderRadius: 10,
+    marginHorizontal: 8,
+    padding: 16,
   },
 
   buttonView: {

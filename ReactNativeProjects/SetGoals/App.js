@@ -33,7 +33,7 @@ const App = () => {
           onPress={() => {
             setShowModal(true);
           }}
-          color="#009EFF"
+          color="#5837D0"
         />
       </View>
       <GoalInput
@@ -66,6 +66,7 @@ const styles = StyleSheet.create({
     flex: 1,
     paddingTop: 50,
     paddingHorizontal: 16,
+    backgroundColor: '#5DA7DB',
   },
 
   goalsContainer: {
@@ -73,7 +74,7 @@ const styles = StyleSheet.create({
     marginTop: 24,
     paddingTop: 15,
     borderTopWidth: 1,
-    borderTopColor: '#cccccc',
+    borderTopColor: 'gray',
   },
 });
 
