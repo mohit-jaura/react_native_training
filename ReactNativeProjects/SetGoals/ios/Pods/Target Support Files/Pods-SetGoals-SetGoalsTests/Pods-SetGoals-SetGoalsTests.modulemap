@@ -1,0 +1,6 @@
+module Pods_SetGoals_SetGoalsTests {
+  umbrella header "Pods-SetGoals-SetGoalsTests-umbrella.h"
+
+  export *
+  module * { export * }
+}
