@@ -2,7 +2,7 @@ import React, {useState} from 'react';
 import {View, TextInput, StyleSheet, Alert} from 'react-native';
 
 import PrimaryButton from '../components/PrimaryButton';
-const StartGameScreen = ({onConfirmNumber}) => {
+const StartGameScreen = ({navigation, onConfirmNumber}) => {
   const [enteredNumber, setEnteredNunber] = useState('');
   function numberInputHandler(enteredText) {
     setEnteredNunber(enteredNumber);
@@ -25,6 +25,7 @@ const StartGameScreen = ({onConfirmNumber}) => {
   }
   function resetHandler() {
     setEnteredNunber('');
+    navigation.navigate('GameScreen');
   }
   return (
     <View style={styles.inputContainer}>

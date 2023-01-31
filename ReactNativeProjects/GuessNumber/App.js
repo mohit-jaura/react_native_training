@@ -1,26 +1,40 @@
 import React, {useState} from 'react';
 import {StyleSheet, ImageBackground} from 'react-native';
+import {NavigationContainer} from '@react-navigation/native';
 import LinearGradient from 'react-native-linear-gradient';
-
+import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import StartGameScreen from './screens/StartGameScreen';
-
+import GameScreen from './screens/GameScreen';
 const App = () => {
   const [userNumber, setUserNumber] = useState();
 
   function pickedNumberHandler(pickedNumber) {
     setUserNumber(pickedNumber);
   }
-  let screen = <StartGameScreen onConfirmNumber={pickedNumberHandler} />;
+  function homeScreen({navigation}) {
+    return (
+      <LinearGradient colors={['#4e0329', '#ddb52f']} style={styles.rootScreen}>
+        <ImageBackground
+          source={require('./assets/images/guessNumberBackground.png')}
+          resizeMode="cover"
+          style={styles.rootScreen}
+          imageStyle={styles.backGroundImage}>
+          <StartGameScreen
+            navigation={navigation}
+            onConfirmNumber={pickedNumberHandler}
+          />
+        </ImageBackground>
+      </LinearGradient>
+    );
+  }
+  const Stack = createNativeStackNavigator();
   return (
-    <LinearGradient colors={['#4e0329', '#ddb52f']} style={styles.rootScreen}>
-      <ImageBackground
-        source={require('./assets/images/guessNumberBackground.png')}
-        resizeMode="cover"
-        style={styles.rootScreen}
-        imageStyle={styles.backGroundImage}>
-        {screen}
-      </ImageBackground>
-    </LinearGradient>
+    <NavigationContainer>
+      <Stack.Navigator initialRouteName="StartGame">
+        <Stack.Screen name="StartGame" component={homeScreen} />
+        <Stack.Screen name="GameScreen" component={GameScreen} />
+      </Stack.Navigator>
+    </NavigationContainer>
   );
 };
 
