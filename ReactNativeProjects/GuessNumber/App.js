@@ -4,6 +4,7 @@ import {NavigationContainer} from '@react-navigation/native';
 import LinearGradient from 'react-native-linear-gradient';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
+import {createMaterialTopTabNavigator} from '@react-navigation/material-top-tabs';
 import StartGameScreen from './screens/StartGameScreen';
 import GameScreen from './screens/GameScreen';
 const App = () => {
@@ -29,8 +30,8 @@ const App = () => {
     );
   }
   // const Stack = createNativeStackNavigator();
-  const Tab = createBottomTabNavigator();
-
+  const BottomTab = createBottomTabNavigator();
+  const TopTab = createMaterialTopTabNavigator();
   //Screen to Screen navigation
 
   // return (
@@ -44,9 +45,34 @@ const App = () => {
 
   // Bottom tab bar navigation
 
+  // return (
+  //   <NavigationContainer>
+  //     <BottomTab.Navigator
+  //       initialRouteName="Start Game"
+  //       screenOptions={({route}) => ({
+  //         headerStyle: {backgroundColor: '#42f44b'},
+  //         headerTintColor: '#fff',
+  //         headerTitleStyle: {fontWeight: 'bold'},
+  //         tabBarActiveTintColor: 'tomato',
+  //         tabBarInactiveTintColor: 'gray',
+  //       })}>
+  //       <BottomTab.Screen
+  //         name="StartGame"
+  //         component={StartGameScreen}
+  //         options={{tabBarLabel: 'Start Game'}}
+  //       />
+  //       <BottomTab.Screen
+  //         name="GameScreen"
+  //         component={GameScreen}
+  //         options={{tabBarLabel: 'Game Screen'}}
+  //       />
+  //     </BottomTab.Navigator>
+  //   </NavigationContainer>
+  // );
+
   return (
     <NavigationContainer>
-      <Tab.Navigator
+      <TopTab.Navigator
         initialRouteName="Start Game"
         screenOptions={({route}) => ({
           headerStyle: {backgroundColor: '#42f44b'},
@@ -55,17 +81,17 @@ const App = () => {
           tabBarActiveTintColor: 'tomato',
           tabBarInactiveTintColor: 'gray',
         })}>
-        <Tab.Screen
+        <TopTab.Screen
           name="StartGame"
           component={StartGameScreen}
           options={{tabBarLabel: 'Start Game'}}
         />
-        <Tab.Screen
+        <TopTab.Screen
           name="GameScreen"
           component={GameScreen}
           options={{tabBarLabel: 'Game Screen'}}
         />
-      </Tab.Navigator>
+      </TopTab.Navigator>
     </NavigationContainer>
   );
 };
