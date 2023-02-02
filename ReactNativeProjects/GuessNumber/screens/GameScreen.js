@@ -1,9 +1,16 @@
 import React from 'react';
-import {View, Text} from 'react-native';
+import {View, Text, Button} from 'react-native';
 
-const GameScreen = () => {
+const GameScreen = props => {
+  console.log('TAB PROPS ===>', JSON.stringify(props));
   return (
     <View>
+      <Button
+        title="jhgjhg"
+        onPress={() => {
+          props.navigation.navigate('StartGame', {value: 'hghjgjhgj'});
+        }}
+      />
       <Text>GameScreen</Text>
     </View>
   );
