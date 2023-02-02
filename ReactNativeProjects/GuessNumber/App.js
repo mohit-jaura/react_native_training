@@ -96,7 +96,7 @@ const App = () => {
   //   </NavigationContainer>
   // );
 
-  // Drawer navigatio
+  // Drawer navigation
   const Drawer = createDrawerNavigator();
   return (
     <NavigationContainer>
