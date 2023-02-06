@@ -1,14 +1,14 @@
 import React, {useState} from 'react';
-import {StyleSheet, ImageBackground} from 'react-native';
+import {StyleSheet, ImageBackground, View} from 'react-native';
 import {NavigationContainer} from '@react-navigation/native';
 import LinearGradient from 'react-native-linear-gradient';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 import {createMaterialTopTabNavigator} from '@react-navigation/material-top-tabs';
 import {createDrawerNavigator} from '@react-navigation/drawer';
-
 import StartGameScreen from './screens/StartGameScreen';
 import GameScreen from './screens/GameScreen';
+import DribbleLoginDesign from './screens/DribbleLoginDesign';
 
 function homeScreen({navigation, pickedNumberHandler}) {
   return (
@@ -110,6 +110,10 @@ const DrawerNavigation = () => {
     </NavigationContainer>
   );
 };
+
+const DribbleLoginDesignUI = () => {
+  return <DribbleLoginDesign />;
+};
 const App = () => {
   const [userNumber, setUserNumber] = useState();
 
@@ -117,7 +121,7 @@ const App = () => {
     setUserNumber(pickedNumber);
   }
 
-  return <MaterialTopBar />;
+  return <DribbleLoginDesignUI />;
 };
 
 export default App;
