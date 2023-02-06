@@ -1,5 +1,5 @@
 import React, {useState} from 'react';
-import {StyleSheet, ImageBackground, View} from 'react-native';
+import {StyleSheet, ImageBackground} from 'react-native';
 import {NavigationContainer} from '@react-navigation/native';
 import LinearGradient from 'react-native-linear-gradient';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
@@ -10,7 +10,7 @@ import StartGameScreen from './screens/StartGameScreen';
 import GameScreen from './screens/GameScreen';
 import DribbleLoginDesign from './screens/DribbleLoginDesign';
 
-function homeScreen({navigation, pickedNumberHandler}) {
+function HomeScreen({navigation, pickedNumberHandler}) {
   return (
     <LinearGradient colors={['#4e0329', '#ddb52f']} style={styles.rootScreen}>
       <ImageBackground
@@ -62,7 +62,7 @@ const StackScreenNavigation = () => {
   return (
     <NavigationContainer>
       <Stack.Navigator initialRouteName="StartGame">
-        <Stack.Screen name="StartGame" component={homeScreen} />
+        <Stack.Screen name="StartGame" component={HomeScreen} />
         <Stack.Screen name="GameScreen" component={GameScreen} />
       </Stack.Navigator>
     </NavigationContainer>
@@ -115,13 +115,7 @@ const DribbleLoginDesignUI = () => {
   return <DribbleLoginDesign />;
 };
 const App = () => {
-  const [userNumber, setUserNumber] = useState();
-
-  function pickedNumberHandler(pickedNumber) {
-    setUserNumber(pickedNumber);
-  }
-
-  return <DribbleLoginDesignUI />;
+  return <StackScreenNavigation />;
 };
 
 export default App;

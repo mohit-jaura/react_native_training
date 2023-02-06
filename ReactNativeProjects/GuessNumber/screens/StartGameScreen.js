@@ -5,7 +5,7 @@ import PrimaryButton from '../components/PrimaryButton';
 const StartGameScreen = ({navigation, onConfirmNumber}) => {
   const [enteredNumber, setEnteredNunber] = useState('');
   function numberInputHandler(enteredText) {
-    setEnteredNunber(enteredNumber);
+    setEnteredNunber(enteredText);
   }
 
   function confirmInputHandler() {
@@ -36,7 +36,7 @@ const StartGameScreen = ({navigation, onConfirmNumber}) => {
         autoCapitalize="none"
         autoCorrect={false}
         value={enteredNumber}
-        onChangeText={numberInputHandler}
+        onChangeText={changedNumber => numberInputHandler(changedNumber)}
       />
       <View style={styles.buttonsContainer}>
         <View style={styles.buttonContainer}>
