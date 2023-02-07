@@ -115,7 +115,7 @@ const DribbleLoginDesignUI = () => {
   return <DribbleLoginDesign />;
 };
 const App = () => {
-  return <StackScreenNavigation />;
+  return <DribbleLoginDesignUI />;
 };
 
 export default App;
