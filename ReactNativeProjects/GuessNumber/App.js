@@ -9,6 +9,7 @@ import {createDrawerNavigator} from '@react-navigation/drawer';
 import StartGameScreen from './screens/StartGameScreen';
 import GameScreen from './screens/GameScreen';
 import DribbleLoginDesign from './screens/DribbleLoginDesign';
+import DribbleUserProfile from './screens/DribbleUserProfile';
 
 function HomeScreen({navigation, pickedNumberHandler}) {
   return (
@@ -115,7 +116,7 @@ const DribbleLoginDesignUI = () => {
   return <DribbleLoginDesign />;
 };
 const App = () => {
-  return <DribbleLoginDesignUI />;
+  return <DribbleUserProfile />;
 };
 
 export default App;
