@@ -9,20 +9,18 @@ import React from 'react';
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import CategoriesScreen from './screens/CategoriesScreen';
-import MealOverviewScreen from './screens/MealOverviewScreen';
+import MealsOverviewScreen from './screens/MealsOverviewScreen';
 
 const NavigationStack = createNativeStackNavigator();
 function App(): JSX.Element {
   return (
     <NavigationContainer>
-      <NavigationStack.Navigator initialRouteName='CategoriesScreen' screenOptions={{headerBackTitleVisible: false}}>
-        <NavigationStack.Screen name='MealsCategory' component={CategoriesScreen}/>
-        <NavigationStack.Screen name='MealOverview' component={MealOverviewScreen} options={{title:'Meal Overview'}}/>
+      <NavigationStack.Navigator initialRouteName='CategoriesScreen' screenOptions={{headerBackTitleVisible: false, animation:'fade'}}>
+        <NavigationStack.Screen name='MealsCategory' component={CategoriesScreen} options={{title:'All Categories'}}/>
+        <NavigationStack.Screen name='MealsOverviewScreen' component={MealsOverviewScreen}/>
       </NavigationStack.Navigator>
     </NavigationContainer>
-
   );
 }
-
 
 export default App;
