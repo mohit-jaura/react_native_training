@@ -5,7 +5,6 @@ import MealItem from '../components/MealItem';
 import {CATEGORIES, MEALS} from '../data/dummy-data';
 function MealsOverviewScreen({route, navigation}) {
   const categoryId = route.params.categoryId;
-  console.log(categoryId);
   const displayedMeals = MEALS.filter(meal => {
     return meal.categoryIds.indexOf(categoryId) >= 0;
   });
@@ -18,6 +17,11 @@ function MealsOverviewScreen({route, navigation}) {
   }, [categoryId, navigation]);
 
   function renderMealItem(itemData) {
+    function onMealTappedHandler() {
+      navigation.navigate('MealDetailScreen', {
+        mealId: itemData.item.id,
+      });
+    }
     const item = itemData.item;
     const meal = {
       imageUrl: item.imageUrl,
@@ -25,8 +29,8 @@ function MealsOverviewScreen({route, navigation}) {
       duration: item.duration,
       affordability: item.affordability,
       complexity: item.complexity,
+      onPressHandler: onMealTappedHandler,
     };
-    console.log('selected meal', meal);
     return <MealItem {...meal} />;
   }
   return (
