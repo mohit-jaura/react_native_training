@@ -1,4 +1,5 @@
 import {Image, Platform, Pressable, StyleSheet, Text, View} from 'react-native';
+import MealDetails from './MealDetails';
 
 function MealItem({
   title,
@@ -21,11 +22,11 @@ function MealItem({
           <Image source={{uri: imageUrl}} style={styles.mealImage} />
           <Text style={styles.title}>{title}</Text>
         </View>
-        <View style={styles.descriptionContainer}>
-          <Text style={styles.description}>{duration} Min</Text>
-          <Text style={styles.description}>{complexity.toUpperCase()}</Text>
-          <Text style={styles.description}>{affordability.toUpperCase()}</Text>
-        </View>
+        <MealDetails
+          duration={duration}
+          complexity={complexity}
+          affordability={affordability}
+        />
       </Pressable>
     </View>
   );
@@ -45,6 +46,7 @@ const styles = StyleSheet.create({
     shadowRadius: 8,
     overflow: Platform.OS === 'android' ? 'hidden' : 'visible',
   },
+
   mealImage: {
     width: '100%',
     height: 250,
@@ -58,24 +60,11 @@ const styles = StyleSheet.create({
     color: 'black',
   },
 
-  description: {
-    fontWeight: '500',
-    fontSize: 13,
-    padding: 2,
-    color: 'black',
-    marginBottom: 1,
-    marginHorizontal: 4,
-  },
   button: {
     flex: 1,
   },
+
   buttonPressed: {
     opacity: 0.5,
-  },
-  descriptionContainer: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    padding: 8,
-    justifyContent: 'center',
   },
 });
