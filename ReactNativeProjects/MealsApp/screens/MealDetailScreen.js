@@ -1,16 +1,45 @@
 import {Image, ScrollView, StyleSheet, Text, View} from 'react-native';
-import {useLayoutEffect} from 'react';
-import {MEALS} from '../data/dummy-data';
+import {useContext, useLayoutEffect} from 'react';
+import {MEALS, FavouriteMeals} from '../data/dummy-data';
 import MealDetails from '../components/MealDetails';
 import Subtitle from '../components/Subtitle';
 import ListView from '../components/ListView';
+import IconButton from '../components/IconButton';
+import {FavouritesContext} from '../store/context/favourites-context';
+
 function MealDetailScreen({route, navigation}) {
   const mealId = route.params.mealId;
   const meal = MEALS.find(meal => meal.id === mealId);
+  const favouriteMealsContext = useContext(FavouritesContext);
+  const isFavourite = favouriteMealsContext.ids.includes(mealId);
+
+  function headerRightButtonHandler() {
+    console.log(isFavourite);
+    console.log(FavouriteMeals.indexOf(meal));
+    console.log(typeof isFavourite);
+    if (isFavourite) {
+      favouriteMealsContext.removeFavourite(mealId);
+    } else {
+      favouriteMealsContext.addFavourite(mealId);
+    }
+  }
   useLayoutEffect(() => {
     const mealTitle = meal.title;
-    navigation.setOptions({title: mealTitle});
-  }, [meal, navigation]);
+    navigation.setOptions({
+      title: mealTitle,
+      headerRight: () => {
+        const iconName = isFavourite ? 'heart' : 'heart-o';
+        const iconColor = isFavourite ? 'red' : 'black';
+        return (
+          <IconButton
+            iconName={iconName}
+            iconColor={iconColor}
+            onPressHandler={headerRightButtonHandler}
+          />
+        );
+      },
+    });
+  }, [meal, headerRightButtonHandler, navigation]);
 
   return (
     <View>

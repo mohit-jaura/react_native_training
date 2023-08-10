@@ -4,7 +4,7 @@ function ListView({list}) {
   return (
     <View style={styles.listContainer}>
       {list.map(item => (
-        <View style={styles.listTile}>
+        <View style={styles.listTile} key={item}>
           <View style={styles.indicatorView} />
           <Text style={styles.title} key={item}>
             {item}
@@ -29,7 +29,6 @@ const styles = StyleSheet.create({
   },
   listTile: {
     flexDirection: 'row',
-    // alignItems: 'center',
     marginHorizontal: 5,
   },
   indicatorView: {
