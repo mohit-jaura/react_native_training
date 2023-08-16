@@ -4,10 +4,11 @@ import MealsList from '../components/MealsList';
 import {FavouritesContext} from '../store/context/favourites-context';
 import {MEALS} from '../data/dummy-data';
 import {StyleSheet} from 'react-native';
+import {useSelector} from 'react-redux';
 function FavouriteMealsScreen({navigation}) {
-  const favouriteMealsContext = useContext(FavouritesContext);
+  const favouriteMealsIds = useSelector(state => state.favouriteMeals.ids);
   const favouriteMeals = MEALS.filter(meal =>
-    favouriteMealsContext.ids.includes(meal.id),
+    favouriteMealsIds.includes(meal.id),
   );
 
   function EmptyDataMessage() {
