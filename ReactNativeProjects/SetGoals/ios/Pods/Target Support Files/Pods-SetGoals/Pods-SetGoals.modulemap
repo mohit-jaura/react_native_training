@@ -1,6 +1,0 @@
-module Pods_SetGoals {
-  umbrella header "Pods-SetGoals-umbrella.h"
-
-  export *
-  module * { export * }
-}
