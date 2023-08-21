@@ -6,17 +6,19 @@
  */
 
 import React from 'react';
-import type { PropsWithChildren } from 'react';
-import {
-  Text,
-  View,
-} from 'react-native';
+import { NavigationContainer } from '@react-navigation/native';
+import { createNativeStackNavigator } from '@react-navigation/native-stack';
+import HomeScreen from './screens/HomeScreen';
 
 function App(): JSX.Element {
+
+  const NavigationStack = createNativeStackNavigator();
   return (
-    <View>
-      <Text>Running on android phone</Text>
-    </View>
+    <NavigationContainer>
+      <NavigationStack.Navigator initialRouteName='HomeScreen'>
+        <NavigationStack.Screen name='HomeScreen' component={HomeScreen} options={{title:'To Do'}} />
+      </NavigationStack.Navigator>
+    </NavigationContainer>
   );
 }
 
