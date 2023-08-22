@@ -7,24 +7,33 @@ function CreateScreen({saveButtonHandler, cancelButtonHandler}) {
   const [isCompleted, setIsCompleted] = useState(false);
   const iconName = isCompleted === false ? 'circle-thin' : 'check-circle-o';
   const iconColor = isCompleted === false ? 'black' : 'green';
+  const [descriptionLength, setDescriptionLength] = useState(0);
   function completedButtonHandler() {
     setIsCompleted(!isCompleted);
+  }
+  function descriptionChangeHandler(textString) {
+    setDescriptionLength(textString.length);
   }
   return (
     <View style={styles.mainView}>
       <View style={styles.containerView}>
         <View style={styles.inputFields}>
           <InputField
-            identifier={'NameField'}
-            placeholder={'Name'}
-            textChangeHandler={undefined}
+            textInputConfig={{
+              placeholder: 'Name',
+              maxLength: 40,
+              onChangeText: undefined,
+            }}
           />
         </View>
         <View style={styles.inputFields}>
           <InputField
-            identifier={'DescriptionField'}
-            placeholder={'Description'}
-            textChangeHandler={undefined}
+            textInputConfig={{
+              placeholder: 'Description',
+              multiline: true,
+              maxLength: 200,
+              onChangeText: descriptionChangeHandler,
+            }}
           />
         </View>
         <View
@@ -53,6 +62,7 @@ function CreateScreen({saveButtonHandler, cancelButtonHandler}) {
               flexDirection: 'row',
               paddingHorizontal: 10,
               justifyContent: 'center',
+              marginTop: descriptionLength <= 100 ? 80 : 50,
             },
           ]}>
           <View style={styles.buttonView}>

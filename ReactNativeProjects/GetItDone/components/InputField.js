@@ -1,12 +1,9 @@
 import {StyleSheet, TextInput, View} from 'react-native';
 
-function InputField({identifier, placeholder, textChangeHandler}) {
+function InputField({textInputConfig}) {
   return (
     <View style={styles.mainView}>
-      <TextInput
-        placeholder={placeholder}
-        id={identifier}
-        onChangeText={textChangeHandler}></TextInput>
+      <TextInput {...textInputConfig} />
     </View>
   );
 }

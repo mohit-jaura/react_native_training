@@ -62,7 +62,7 @@ function HomeScreen({navigation}) {
         onRequestClose={() => {
           setVisibleModal(!visibleModal);
         }}>
-        <View style={{height: '40%', marginHorizontal: 20, marginTop: 230}}>
+        <View style={{height: '50%', marginHorizontal: 20, marginTop: 230}}>
           <CreateScreen
             saveButtonHandler={saveTodoHandler}
             cancelButtonHandler={cancelTodoHandler}
