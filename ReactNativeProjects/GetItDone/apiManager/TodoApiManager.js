@@ -2,14 +2,17 @@ import axios from 'axios';
 const baseUrl =
   'https://react-native-dummy-e0c43-default-rtdb.asia-southeast1.firebasedatabase.app/';
 
-export function fetchTodo() {
-  axios.get(`${baseUrl}todo.json`).then(response => {
-    console.log(response.status);
-  });
-}
+export const fetchTodo = async () => {
+  const response = await axios.get(`${baseUrl}todo.json`);
+  const dataArray = [];
+  for (key in response.data) {
+    dataArray.push(key);
+  }
+  console.log(response.data);
+  return response.data;
+};
 
-export function createTodo(todo) {
-  axios.post(`${baseUrl}todo.json`, todo).then(response => {
-    console.log(response.statusText);
-  });
-}
+export const createTodo = async todo => {
+  const response = await axios.post(`${baseUrl}todo.json`, todo);
+  return response.data;
+};

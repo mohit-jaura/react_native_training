@@ -1,36 +1,64 @@
 import {FlatList, Modal, View} from 'react-native';
-import {ToDoList, ToDoModel} from '../model/ToDoModel';
 import ListTile from '../components/ListTile';
-import {useEffect, useLayoutEffect, useState} from 'react';
+import React, {useEffect, useState} from 'react';
 
 import IconButton from '../components/IconButton';
 import CreateScreen from './CreateScreen';
 import {createTodo, fetchTodo} from '../apiManager/TodoApiManager';
-function HomeScreen({navigation}) {
+import {useQuery, QueryClient, useMutation} from '@tanstack/react-query';
+
+const HomeScreen = ({navigation}) => {
+  const queryClient = new QueryClient();
   const [visibleModal, setVisibleModal] = useState(false);
+  const [todoData, setTodoData] = useState([]);
+  const newTodo = {
+    id: null,
+    name: '',
+    description: '',
+    date: null,
+    isCompleted: false,
+  };
+  const saveTodoHandler = newTodo => {
+    console.log('on home screen todo got====>', typeof newTodo);
+    console.log('on home screen todo got====>', newTodo);
+    todoMutation.mutate(newTodo);
+    setVisibleModal(false);
+  };
   function renderItem(itemData) {
     return <ListTile todo={itemData.item} />;
   }
-  function addNewButtonHandler() {
+  const addNewButtonHandler = () => {
+    console.log('entered in add button===> ', visibleModal);
     setVisibleModal(true);
-  }
+  };
 
-  function saveTodoHandler() {
-    const todo = new ToDoModel(
-      '2',
-      'Todo2',
-      '21-08-2023',
-      'second todo create on firebase with axio api calling',
-      false,
-    );
-    createTodo(todo);
-    setVisibleModal(!visibleModal);
-  }
+  const {refetch: getDataFromApi} = useQuery(['fetchToDo'], fetchTodo, {
+    onSuccess: response => {
+      setTodoData(response);
+      console.log(dataArray);
+      console.log('type of response', typeof response);
+    },
+    onError: error => {
+      console.log('error aagya ===>', JSON.stringify(error));
+    },
+    enabled: false,
+  });
 
+  const todoMutation = useMutation({
+    mutationFn: todo => {
+      createTodo(todo);
+    },
+    onSuccess: response => {
+      queryClient.invalidateQueries(['fetchToDo']);
+    },
+    onError: error => {
+      console.log(JSON.stringify(error));
+    },
+  });
   function cancelTodoHandler() {
-    setVisibleModal(!visibleModal);
+    setVisibleModal(false);
   }
-  useLayoutEffect(() => {
+  useEffect(() => {
     navigation.setOptions({
       headerRight: () => {
         return (
@@ -44,14 +72,15 @@ function HomeScreen({navigation}) {
       },
     });
   }, [navigation]);
-
+  useEffect(() => {}, [visibleModal]);
   useEffect(() => {
-    fetchTodo();
-  });
+    getDataFromApi();
+  }, [todoData]);
+
   return (
     <View>
       <FlatList
-        data={ToDoList}
+        data={todoData}
         keyExtractor={item => item.id}
         renderItem={renderItem}
       />
@@ -59,11 +88,10 @@ function HomeScreen({navigation}) {
         animationType="slide"
         transparent={true}
         visible={visibleModal}
-        onRequestClose={() => {
-          setVisibleModal(!visibleModal);
-        }}>
+        onRequestClose={cancelTodoHandler}>
         <View style={{height: '50%', marginHorizontal: 20, marginTop: 230}}>
           <CreateScreen
+            todo={newTodo}
             saveButtonHandler={saveTodoHandler}
             cancelButtonHandler={cancelTodoHandler}
           />
@@ -71,6 +99,6 @@ function HomeScreen({navigation}) {
       </Modal>
     </View>
   );
-}
+};
 
 export default HomeScreen;

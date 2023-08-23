@@ -3,17 +3,34 @@ import InputField from '../components/InputField';
 import IconButton from '../components/IconButton';
 import {useState} from 'react';
 
-function CreateScreen({saveButtonHandler, cancelButtonHandler}) {
-  const [isCompleted, setIsCompleted] = useState(false);
+function CreateScreen({todo, saveButtonHandler, cancelButtonHandler}) {
+  const [todoName, setTodoName] = useState(todo.name);
+  const [todoDescription, setTodoDescription] = useState(todo.description);
+  const [isCompleted, setIsCompleted] = useState(todo.isCompleted);
   const iconName = isCompleted === false ? 'circle-thin' : 'check-circle-o';
   const iconColor = isCompleted === false ? 'black' : 'green';
-  const [descriptionLength, setDescriptionLength] = useState(0);
+
+  // useEffect(() => {}, [newTodo]);
   function completedButtonHandler() {
     setIsCompleted(!isCompleted);
   }
-  function descriptionChangeHandler(textString) {
-    setDescriptionLength(textString.length);
+  function nameChangeHandler(textString) {
+    setTodoName(textString);
   }
+  function descriptionChangeHandler(textString) {
+    setTodoDescription(textString);
+  }
+
+  const saveHandler = () => {
+    const createdTodo = {
+      id: Math.random().toString(),
+      name: todoName,
+      description: todoDescription,
+      date: new Date(),
+      isCompleted: isCompleted,
+    };
+    saveButtonHandler(createdTodo);
+  };
   return (
     <View style={styles.mainView}>
       <View style={styles.containerView}>
@@ -22,7 +39,7 @@ function CreateScreen({saveButtonHandler, cancelButtonHandler}) {
             textInputConfig={{
               placeholder: 'Name',
               maxLength: 40,
-              onChangeText: undefined,
+              onChangeText: nameChangeHandler,
             }}
           />
         </View>
@@ -62,11 +79,11 @@ function CreateScreen({saveButtonHandler, cancelButtonHandler}) {
               flexDirection: 'row',
               paddingHorizontal: 10,
               justifyContent: 'center',
-              marginTop: descriptionLength <= 100 ? 80 : 50,
+              marginTop: todoDescription.length <= 100 ? 80 : 50,
             },
           ]}>
           <View style={styles.buttonView}>
-            <Button title="Save" onPress={saveButtonHandler}></Button>
+            <Button title="Save" onPress={saveHandler}></Button>
           </View>
           <View style={styles.buttonView}>
             <Button
