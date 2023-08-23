@@ -4,7 +4,7 @@ const baseUrl =
 
 export function fetchTodo() {
   axios.get(`${baseUrl}todo.json`).then(response => {
-    console.log(response.data);
+    console.log(response.status);
   });
 }
 
