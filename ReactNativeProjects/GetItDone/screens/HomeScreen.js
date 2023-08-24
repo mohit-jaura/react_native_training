@@ -1,10 +1,14 @@
-import {FlatList, Modal, View} from 'react-native';
+import {FlatList, Modal, Text, View} from 'react-native';
 import ListTile from '../components/ListTile';
 import React, {useEffect, useState} from 'react';
 
 import IconButton from '../components/IconButton';
 import CreateScreen from './CreateScreen';
-import {createTodo, fetchTodo} from '../apiManager/TodoApiManager';
+import {
+  createTodo,
+  fetchTodo,
+  markTodoIsCompleted,
+} from '../apiManager/TodoApiManager';
 import {useQuery, QueryClient, useMutation} from '@tanstack/react-query';
 
 const HomeScreen = ({navigation}) => {
@@ -18,24 +22,26 @@ const HomeScreen = ({navigation}) => {
     date: null,
     isCompleted: false,
   };
-  const saveTodoHandler = newTodo => {
-    console.log('on home screen todo got====>', typeof newTodo);
-    console.log('on home screen todo got====>', newTodo);
-    todoMutation.mutate(newTodo);
-    setVisibleModal(false);
-  };
-  function renderItem(itemData) {
-    return <ListTile todo={itemData.item} />;
-  }
-  const addNewButtonHandler = () => {
-    console.log('entered in add button===> ', visibleModal);
-    setVisibleModal(true);
-  };
-
+  useEffect(() => {
+    navigation.setOptions({
+      headerRight: () => {
+        return (
+          <IconButton
+            iconeName={'plus-square-o'}
+            iconSize={25}
+            iconColor={'black'}
+            onPressHandler={addNewButtonHandler}
+          />
+        );
+      },
+    });
+  }, [navigation]);
+  useEffect(() => {
+    getDataFromApi();
+  }, [visibleModal]);
   const {refetch: getDataFromApi} = useQuery(['fetchToDo'], fetchTodo, {
     onSuccess: response => {
       setTodoData(response);
-      console.log(dataArray);
       console.log('type of response', typeof response);
     },
     onError: error => {
@@ -55,28 +61,43 @@ const HomeScreen = ({navigation}) => {
       console.log(JSON.stringify(error));
     },
   });
+
+  const markTodoIsCompletedMutation = useMutation({
+    mutationFn: todo => {
+      markTodoIsCompleted(todo);
+    },
+    onSuccess: response => {
+      queryClient.invalidateQueries(['fetchToDo']);
+    },
+    onError: error => {
+      console.log(JSON.stringify(error));
+    },
+  });
+  const saveTodoHandler = newTodo => {
+    todoMutation.mutate(newTodo);
+    setVisibleModal(false);
+  };
+
+  const addNewButtonHandler = () => {
+    console.log('entered in add button===> ', visibleModal);
+    setVisibleModal(true);
+  };
+
+  const markTodoIsCompletedHandler = todo => {
+    markTodoIsCompletedMutation.mutate(todo);
+  };
   function cancelTodoHandler() {
     setVisibleModal(false);
   }
-  useEffect(() => {
-    navigation.setOptions({
-      headerRight: () => {
-        return (
-          <IconButton
-            iconeName={'plus-square-o'}
-            iconSize={25}
-            iconColor={'black'}
-            onPressHandler={addNewButtonHandler}
-          />
-        );
-      },
-    });
-  }, [navigation]);
-  useEffect(() => {}, [visibleModal]);
-  useEffect(() => {
-    getDataFromApi();
-  }, [todoData]);
 
+  function renderItem(itemData) {
+    return (
+      <ListTile
+        todo={itemData.item}
+        markIsCompleteHandler={markTodoIsCompletedHandler}
+      />
+    );
+  }
   return (
     <View>
       <FlatList

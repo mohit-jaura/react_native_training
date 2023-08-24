@@ -1,7 +1,7 @@
 import {Platform, Pressable, StyleSheet, Text, View} from 'react-native';
 import IconButton from './IconButton';
 
-function ListTile({todo}) {
+function ListTile({todo, markIsCompleteHandler}) {
   const iconName =
     todo.isCompleted === false ? 'circle-thin' : 'check-circle-o';
   const iconColor = todo.isCompleted === false ? 'black' : 'green';
@@ -23,6 +23,9 @@ function ListTile({todo}) {
               iconeName={iconName}
               iconSize={25}
               iconColor={iconColor}
+              onPressHandler={() => {
+                markIsCompleteHandler(todo);
+              }}
             />
           </View>
         </View>
