@@ -1,10 +1,11 @@
 import {Platform, Pressable, StyleSheet, Text, View} from 'react-native';
 import IconButton from './IconButton';
+import {useState} from 'react';
 
-function ListTile({todo, markIsCompleteHandler}) {
-  const iconName =
-    todo.isCompleted === false ? 'circle-thin' : 'check-circle-o';
-  const iconColor = todo.isCompleted === false ? 'black' : 'green';
+function ListTile({todo, markIsCompleteHandler, deleteTodoHandler}) {
+  const [isCompleted, setIsCompleted] = useState(todo.isCompleted);
+  const iconName = isCompleted === false ? 'circle-thin' : 'check-circle-o';
+  const iconColor = isCompleted === false ? 'black' : 'green';
   return (
     <View style={styles.container}>
       <Pressable
@@ -24,7 +25,21 @@ function ListTile({todo, markIsCompleteHandler}) {
               iconSize={25}
               iconColor={iconColor}
               onPressHandler={() => {
-                markIsCompleteHandler(todo);
+                setIsCompleted(!isCompleted);
+                markIsCompleteHandler({
+                  ...todo,
+                  isCompleted: !isCompleted,
+                });
+              }}
+            />
+          </View>
+          <View style={styles.buttonView}>
+            <IconButton
+              iconeName={'trash-o'}
+              iconSize={25}
+              iconColor={'red'}
+              onPressHandler={() => {
+                deleteTodoHandler(todo.id);
               }}
             />
           </View>
@@ -54,7 +69,7 @@ const styles = StyleSheet.create({
   },
 
   detailView: {
-    width: '80%',
+    width: '70%',
     marginLeft: 20,
     marginVertical: 10,
   },

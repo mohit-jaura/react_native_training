@@ -18,6 +18,13 @@ export const createTodo = async todo => {
   return response.data;
 };
 export const markTodoIsCompleted = async todo => {
-  const response = await axios.put(`${baseUrl}todo/${todo.id}`, todo);
+  const response = await axios.put(`${baseUrl}todo/${todo.id}.json`, todo);
+  return response.data;
+};
+
+export const deleteTodo = async todoId => {
+  console.log(todoId);
+  const response = await axios.delete(`${baseUrl}todo/${todoId}.json`);
+  console.log(response);
   return response.data;
 };

@@ -8,6 +8,7 @@ import {
   createTodo,
   fetchTodo,
   markTodoIsCompleted,
+  deleteTodo,
 } from '../apiManager/TodoApiManager';
 import {useQuery, QueryClient, useMutation} from '@tanstack/react-query';
 
@@ -38,11 +39,11 @@ const HomeScreen = ({navigation}) => {
   }, [navigation]);
   useEffect(() => {
     getDataFromApi();
-  }, [visibleModal]);
+  }, [todoData, visibleModal]);
   const {refetch: getDataFromApi} = useQuery(['fetchToDo'], fetchTodo, {
     onSuccess: response => {
+      console.log('enetred in fetch todo');
       setTodoData(response);
-      console.log('type of response', typeof response);
     },
     onError: error => {
       console.log('error aagya ===>', JSON.stringify(error));
@@ -55,6 +56,7 @@ const HomeScreen = ({navigation}) => {
       createTodo(todo);
     },
     onSuccess: response => {
+      console.log('enetred in create todo');
       queryClient.invalidateQueries(['fetchToDo']);
     },
     onError: error => {
@@ -67,6 +69,20 @@ const HomeScreen = ({navigation}) => {
       markTodoIsCompleted(todo);
     },
     onSuccess: response => {
+      console.log('enetred in mark todo');
+      queryClient.invalidateQueries(['fetchToDo']);
+    },
+    onError: error => {
+      console.log(JSON.stringify(error));
+    },
+  });
+
+  const deleteTodoMutation = useMutation({
+    mutationFn: todoId => {
+      deleteTodo(todoId);
+    },
+    onSuccess: response => {
+      console.log('enetred in delete todo');
       queryClient.invalidateQueries(['fetchToDo']);
     },
     onError: error => {
@@ -79,12 +95,15 @@ const HomeScreen = ({navigation}) => {
   };
 
   const addNewButtonHandler = () => {
-    console.log('entered in add button===> ', visibleModal);
     setVisibleModal(true);
   };
 
   const markTodoIsCompletedHandler = todo => {
     markTodoIsCompletedMutation.mutate(todo);
+  };
+
+  const deleteTodoHandler = todoId => {
+    deleteTodoMutation.mutate(todoId);
   };
   function cancelTodoHandler() {
     setVisibleModal(false);
@@ -95,6 +114,7 @@ const HomeScreen = ({navigation}) => {
       <ListTile
         todo={itemData.item}
         markIsCompleteHandler={markTodoIsCompletedHandler}
+        deleteTodoHandler={deleteTodoHandler}
       />
     );
   }
