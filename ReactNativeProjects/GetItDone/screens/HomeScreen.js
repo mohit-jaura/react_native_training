@@ -56,8 +56,7 @@ const HomeScreen = ({navigation}) => {
       createTodo(todo);
     },
     onSuccess: response => {
-      console.log('enetred in create todo');
-      queryClient.invalidateQueries(['fetchToDo']);
+      getDataFromApi();
     },
     onError: error => {
       console.log(JSON.stringify(error));
@@ -82,8 +81,7 @@ const HomeScreen = ({navigation}) => {
       deleteTodo(todoId);
     },
     onSuccess: response => {
-      console.log('enetred in delete todo');
-      queryClient.invalidateQueries(['fetchToDo']);
+      getDataFromApi();
     },
     onError: error => {
       console.log(JSON.stringify(error));
